@@ -1,0 +1,125 @@
+% Preamble for the md-to-pdf skill. Sized for the reMarkable Paper Pro screen
+% (180mm x 240mm) and styled after the DocC look swift-book-pdf uses. The
+% build script defines \definecolor{accent} before this file; the fallback
+% below keeps the preamble usable on its own.
+\providecolor{accent}{HTML}{006400}
+
+% Fonts: Helvetica Neue for text (closest system face to SF Pro), SF Mono for
+% code, with a symbol fallback chain for glyphs the text font lacks.
+\directlua{
+  luaotfload.add_fallback("symbolfallback", {
+    "Apple Symbols:mode=harf;script=dflt;",
+    "Menlo:mode=harf;script=dflt;",
+    "Hiragino Sans:mode=harf;script=dflt;",
+  })
+}
+\setmainfont{Helvetica Neue}[
+  UprightFont = * ,
+  BoldFont = *  Bold,
+  ItalicFont = * Italic,
+  BoldItalicFont = * Bold Italic,
+  Ligatures = TeX,
+  RawFeature = {fallback=symbolfallback},
+]
+\setsansfont{Helvetica Neue}[
+  UprightFont = * ,
+  BoldFont = *  Bold,
+  ItalicFont = * Italic,
+  BoldItalicFont = * Bold Italic,
+  Ligatures = TeX,
+  RawFeature = {fallback=symbolfallback},
+]
+\setmonofont{SF Mono}[
+  Scale = MatchLowercase,
+  RawFeature = {fallback=symbolfallback},
+]
+
+% Page furniture: running header with the current chapter or section, page
+% number on the outer edge, a thin rule under the header.
+\usepackage[automark,headsepline=0.4pt]{scrlayer-scrpage}
+\clearpairofpagestyles
+\ihead{\leftmark}
+\ohead{\pagemark}
+\pagestyle{scrheadings}
+\ifdefined\chapter
+  \automark[section]{chapter}
+  \renewcommand*{\chaptermarkformat}{}
+\else
+  \automark{section}
+\fi
+\renewcommand*{\sectionmarkformat}{}
+\setkomafont{pageheadfoot}{\normalfont\small\color{black!60}}
+\setkomafont{pagenumber}{\normalfont\small}
+\setkomafont{disposition}{\bfseries\color{accent}}
+\setkomafont{headsepline}{\color{accent}}
+\ifdefined\chapter
+  \addtokomafont{partentry}{\color{black}}
+  \addtokomafont{chapterentry}{\color{black}}
+\else
+  \addtokomafont{sectionentry}{\color{black}}
+\fi
+\ifdefined\chapter
+  \setkomafont{part}{\Huge\bfseries}
+  \setkomafont{chapter}{\LARGE\bfseries}
+\fi
+\setkomafont{section}{\Large\bfseries}
+\setkomafont{subsection}{\large\bfseries}
+\setkomafont{subsubsection}{\normalsize\bfseries}
+\setkomafont{title}{\Huge\bfseries\color{accent}}
+\setkomafont{subtitle}{\Large\normalfont}
+\RedeclareSectionCommand[beforeskip=-1.5\baselineskip,afterskip=0.6\baselineskip]{section}
+\RedeclareSectionCommand[beforeskip=-1.1\baselineskip,afterskip=0.4\baselineskip]{subsection}
+\RedeclareSectionCommand[beforeskip=-1.0\baselineskip,afterskip=0.3\baselineskip]{subsubsection}
+
+% Typography for an e-ink page.
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\setlength{\emergencystretch}{3em}
+\setcounter{tocdepth}{1}
+
+% Code: wrap long lines, shade every block, keep the tt font small.
+\usepackage{fvextra}
+\fvset{breaklines=true,breakanywhere=true,breaksymbolleft={},breakindent=1em,fontsize=\small}
+\usepackage[breakable,skins]{tcolorbox}
+\definecolor{codebg}{RGB}{244,244,246}
+\tcbset{codeshade/.style={breakable,enhanced jigsaw,colback=codebg,colframe=codebg,
+  boxrule=0pt,arc=3pt,left=5pt,right=5pt,top=3pt,bottom=3pt,
+  before skip=8pt,after skip=10pt,pad at break*=2pt}}
+\AtBeginDocument{%
+  \ifdefined\Shaded
+    \renewenvironment{Shaded}{\nopagebreak\begin{tcolorbox}[codeshade]}{\end{tcolorbox}}%
+  \else
+    \newenvironment{Shaded}{\nopagebreak\begin{tcolorbox}[codeshade]}{\end{tcolorbox}}%
+  \fi
+}
+
+% Tables: booktabs rules, room between rows. longtable allows a page break
+% right before the table (\penalty\z@ in \LT@start); forbid it. longtable
+% still forces \vfil\break when its first rows do not fit, so the Lua filter
+% also reserves space (\Needspace*) before a heading that a table follows.
+\usepackage{etoolbox}
+\usepackage{needspace}
+\makeatletter
+\patchcmd{\LT@start}{\penalty\z@}{\penalty\@M}{}{}
+\makeatother
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{8pt}
+
+% Long URLs (xurl is not installed here): allow a break after any letter,
+% digit, or punctuation mark in a \url.
+\makeatletter
+\AtBeginDocument{%
+  \g@addto@macro{\UrlBreaks}{%
+    \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m%
+    \do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z%
+    \do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M%
+    \do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z%
+    \do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\=\do\_\do\-%
+    \do\?\do\&\do\%\do\#}%
+  \Urlmuskip=0mu plus 1mu%
+}
+\makeatother
+

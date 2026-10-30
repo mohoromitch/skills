@@ -1,0 +1,23 @@
+author: "Mitchell Mohorovich"
+lang: en-US
+documentclass: scrartcl
+classoption:
+  - oneside
+  - numbers=noenddot
+fontsize: 11pt
+linestretch: 1.1
+geometry:
+  - paperwidth=180mm
+  - paperheight=240mm
+  - left=18mm
+  - right=18mm
+  - top=19mm
+  - bottom=17mm
+  - headsep=5mm
+  - footskip=8mm
+colorlinks: true
+linkcolor: Black
+urlcolor: MidnightBlue
+toccolor: Black
+toc-title: Contents
+numbersections: false
