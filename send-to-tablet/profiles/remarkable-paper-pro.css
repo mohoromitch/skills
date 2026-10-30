@@ -1,0 +1,36 @@
+/* reMarkable Paper Pro: 1620 x 2160 px at 229 ppi, about 180 x 240 mm.
+   The tool toolbar covers about 120 px (13 mm) on the left, or on the right in
+   left-handed mode. 18 mm side margins (162 px) keep text clear of it on both sides. */
+@page { size: 180mm 240mm; margin: 12mm 18mm; }
+
+body {
+  font: 11pt/1.45 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #000;
+  max-width: none;
+  margin: 0;
+}
+h1 { font-size: 20pt; margin: 0 0 4pt; }
+h2 { font-size: 15pt; margin-top: 16pt; border-bottom: 1px solid #000; }
+h3 { font-size: 12.5pt; margin-top: 12pt; }
+h1, h2, h3 { break-after: avoid; }
+
+/* Show which text is a link. A medium blue reads well on the Paper Pro color screen. */
+a { color: #2b6cb0; text-decoration: underline; text-underline-offset: 2px; }
+/* Underline the raised footnote number, not the baseline below it, and keep
+   adjacent footnote links such as [^3][^4] from reading as one link "34". */
+a.footnote-ref { text-decoration: none; }
+a.footnote-ref sup { text-decoration: underline; text-underline-offset: 1px; }
+a.footnote-ref + a.footnote-ref { margin-left: 0.2em; }
+
+table { border-collapse: collapse; width: 100%; font-size: 9pt; margin: 8pt 0; }
+th, td { border: 1px solid #666; padding: 3px 5px; vertical-align: top; text-align: left; }
+th { background: #e6e6e6; }
+tr { break-inside: avoid; }
+
+code { font-family: Menlo, monospace; font-size: 0.9em; overflow-wrap: anywhere; }
+pre { background: #f2f2f2; padding: 6pt; font-size: 8.5pt; white-space: pre-wrap; break-inside: avoid; }
+blockquote { margin-left: 0; padding-left: 8pt; border-left: 3px solid #999; }
+
+img { display: block; margin: 8pt auto; max-width: 100%; max-height: 205mm; object-fit: contain; break-inside: avoid; }
+
+section.footnotes { font-size: 8.5pt; overflow-wrap: anywhere; }
