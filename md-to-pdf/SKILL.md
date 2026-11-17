@@ -35,7 +35,7 @@ Not for HTML output, slide decks, or Google Docs exports. This skill does not up
 4. **Verify before you report.** Run the inspector, then open the PNG files with the Read tool:
 
    ```bash
-   uv run --quiet --with pymupdf python "$SKILL/pdfinspect.py" OUT.pdf --render 1 --render 2 --render-find "Mediation adapter" --render-find "Drop-off ID"
+   uv run --quiet --with pymupdf python "$SKILL/pdfinspect.py" OUT.pdf --render 1 --render 2 --render-find "Architecture" --render-find "Results table"
    ```
 
    `--render N` renders page N. `--render-find PHRASE` renders the last page that contains the phrase. Repeat the flag once per phrase: one phrase from a diagram label and one from a wide table. The PNG files land in `/tmp/pdf-pages/`.

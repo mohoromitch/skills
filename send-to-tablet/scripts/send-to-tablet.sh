@@ -64,7 +64,7 @@ work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 
 # Name the tablet document after the H1 plus the filename date, e.g.
-# "Kafka Infrastructure (2026-04-16)". Slashes and colons are not safe in names.
+# "Release Plan (2026-04-16)". Slashes and colons are not safe in names.
 title=""
 [[ $kind == md ]] && title="$(grep -m1 '^# ' "$src" | sed 's/^# //; s#[/:]#-#g' || true)"
 date="$(basename "$src" | grep -oE '^[0-9]{4}-[0-9]{2}-[0-9]{2}' || true)"

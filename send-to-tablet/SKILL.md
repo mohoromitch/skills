@@ -26,10 +26,10 @@ You must make the offer after a long doc. It is not optional. Ask one time per d
 
 ```bash
 SCRIPT=~/.claude/skills/send-to-tablet/scripts/send-to-tablet.sh
-"$SCRIPT" --folder "/Explore Docs" path/to/doc.md
+"$SCRIPT" --folder "/Research" path/to/doc.md
 ```
 
-- **Folder:** use `/Explore Docs` for exploration docs. Use `/Claude` (the default) for all other docs, unless the user names a folder.
+- **Folder:** use `/Claude` (the default) unless the user names a folder or the doc belongs with a set of related docs in another folder.
 - **PDF input:** pass the `.pdf` path. For a multi-file book or a LaTeX-quality single doc, build it first with the `md-to-pdf` skill, then send the PDF.
 - **Check first:** add `--dry-run --out /tmp/tablet` to render without an upload, then open a page if the user asks how it looks.
 
@@ -51,5 +51,5 @@ The arguments are the minimum clear width in pixels, then the screen width, heig
 
 - **Upload without a yes:** an offer is a question. Wait for the answer.
 - **The `md-to-pdf` skill for an upload:** that skill builds PDFs but does not upload them. Send its output with this script.
-- **No `--folder` for an exploration doc:** the doc lands in `/Claude` instead of next to the other exploration docs.
+- **No `--folder` for a doc in a series:** the doc lands in `/Claude` instead of next to the related docs.
 - **`rmapi cannot reach the reMarkable cloud`:** the tablet is not paired. Tell the user to run `! rmapi` once and enter the one-time code from my.remarkable.com.
