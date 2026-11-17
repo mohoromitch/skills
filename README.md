@@ -28,3 +28,7 @@ Claude sends a file when you ask. Claude asks first when you mention that you wi
 The skill turns one or more markdown files into a print-quality PDF with pandoc and LuaLaTeX. Book mode makes one chapter per file, with a title page and a contents page. Single mode formats one document. Mermaid blocks become vector diagrams. The page fits the reMarkable Paper Pro screen. To put the PDF on the tablet, send it with `send-to-tablet`.
 
 **Requirements:** `pandoc`, `lualatex` and `latexmk` (MacTeX), `npx`, and Google Chrome.
+
+## License
+
+The skills use the MIT license. See [LICENSE](LICENSE).
